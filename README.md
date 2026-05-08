@@ -22,7 +22,7 @@
 ### 2. 加载插件
 
 1. 克隆或下载本项目到本地
-2. 打开 Chrome 浏览器，进入扩展插件页面
+2. 打开浏览器，进入扩展插件页面
 3. 开启右上角【开发者模式】
 4. 点击【加载已解压的扩展程序】
 5. 选择 `translate-plugin` 文件夹
@@ -56,9 +56,9 @@ translate-plugin/
 
 ## 技术栈
 
-- Manifest V3
-- Chrome Extension API
-- 百度翻译API
+- JavaScript
+- HTML
+- API调用
 
 ## 注意事项
 
