@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>划线translator - 设置</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 250px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    h1::before {
+      content: "🌐";
+      margin-right: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .form-group .hint {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .form-group .hint a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .status.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      display: block;
+    }
+
+    .status.error {
+      background: #ffebee;
+      color: #c62828;
+      display: block;
+    }
+
+    .api-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .api-status .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .api-status .status-dot.connected {
+      background: #4caf50;
+    }
+
+    .api-status .status-dot.disconnected {
+      background: #f44336;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 20px 0;
+    }
+
+    h2 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      resize: vertical;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .result-box {
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+      min-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>划线translator 设置</h1>
+
+    <div class="api-status" id="apiStatus">
+      <span id="statusText">API未配置</span>
+      <div class="status-dot disconnected" id="statusDot"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="appId">百度翻译APP ID</label>
+      <input type="text" id="appId" placeholder="请输入您的APP ID">
+      <div class="hint">
+        请先前往 <a href="http://fanyi.baidu.com/api" target="_blank">百度翻译开放平台</a> 申请API
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="apiKey">百度翻译密钥</label>
+      <input type="password" id="apiKey" placeholder="请输入您的API Key">
+    </div>
+
+    <button class="btn" id="saveBtn">保存配置</button>
+
+    <div class="divider"></div>
+
+    <h2>手动翻译</h2>
+
+    <div class="form-group">
+      <label for="translateInput">输入文本</label>
+      <textarea id="translateInput" placeholder="请输入要翻译的英文..." rows="4"></textarea>
+    </div>
+
+    <button class="btn" id="translateBtn">翻译</button>
+
+    <div class="form-group" id="resultGroup" style="display:none;">
+      <label>翻译结果</label>
+      <div class="result-box" id="resultBox"></div>
+    </div>
+
+    <div class="status" id="statusMessage"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
